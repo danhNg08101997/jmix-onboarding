@@ -3,14 +3,15 @@ package com.company.onboarding.view.department;
 import com.company.onboarding.entity.Department;
 import com.company.onboarding.view.main.MainView;
 import com.vaadin.flow.router.Route;
-import io.jmix.flowui.view.EditedEntityContainer;
-import io.jmix.flowui.view.StandardDetailView;
-import io.jmix.flowui.view.ViewController;
-import io.jmix.flowui.view.ViewDescriptor;
+import io.jmix.flowui.view.*;
 
 @Route(value = "departments/:id", layout = MainView.class)
 @ViewController("Department.detail")
 @ViewDescriptor("department-detail-view.xml")
 @EditedEntityContainer("departmentDc")
 public class DepartmentDetailView extends StandardDetailView<Department> {
+    @Subscribe
+    public void onInitEntity(final InitEntityEvent<Department> event) {
+        
+    }
 }
