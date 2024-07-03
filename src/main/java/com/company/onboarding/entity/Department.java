@@ -21,9 +21,9 @@ public class Department {
     @Id
     private UUID id;
 
+    @NotNull
     @InstanceName
     @Column(name = "NAME", nullable = false)
-    @NotNull
     private String name;
 
     @JoinColumn(name = "HR_MANAGER_ID")

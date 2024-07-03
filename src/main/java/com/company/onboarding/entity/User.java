@@ -4,6 +4,7 @@ import io.jmix.core.HasTimeZone;
 import io.jmix.core.annotation.Secret;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.entity.annotation.SystemLevel;
+import io.jmix.core.metamodel.annotation.Composition;
 import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
@@ -12,15 +13,18 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
 @Entity
 @Table(name = "USER_", indexes = {
         @Index(name = "IDX_USER__ON_USERNAME", columnList = "USERNAME", unique = true),
-        @Index(name = "IDX_USER__DEPARTMENT", columnList = "DEPARTMENT_ID")
+        @Index(name = "IDX_USER__DEPARTMENT", columnList = "DEPARTMENT_ID"),
+        @Index(name = "IDX_USER__STEPS", columnList = "")
 })
 public class User implements JmixUserDetails, HasTimeZone {
 
@@ -64,8 +68,32 @@ public class User implements JmixUserDetails, HasTimeZone {
     @ManyToOne(fetch = FetchType.LAZY)
     private Department department;
 
+    @Column(name = "JOINING_DATE")
+    private LocalDate joiningDate;
+
+    @OrderBy("sortValue")
+    @OneToMany(mappedBy = "user")
+    @Composition
+    private List<UserStep> steps;
+
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
+
+    public void setSteps(List<UserStep> steps) {
+        this.steps = steps;
+    }
+
+    public List<UserStep> getSteps() {
+        return steps;
+    }
+
+    public LocalDate getJoiningDate() {
+        return joiningDate;
+    }
+
+    public void setJoiningDate(LocalDate joiningDate) {
+        this.joiningDate = joiningDate;
+    }
 
     public Department getDepartment() {
         return department;
