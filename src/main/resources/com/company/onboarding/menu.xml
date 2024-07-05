@@ -5,6 +5,10 @@
         <item view="User.list" title="msg://com.company.onboarding.view.user/UserListView.title"/>
         <item view="Step.list" title="msg://com.company.onboarding.view.step/stepListView.title"/>
         <item view="Department.list" title="msg://com.company.onboarding.view.department/departmentListView.title"/>
+        <item view="School.list" title="msg://com.company.onboarding.view.school/schoolListView.title"/>
+        <item view="Teacher.list" title="msg://com.company.onboarding.view.teacher/teacherListView.title"/>
+        <item view="Student.list" title="msg://com.company.onboarding.view.student/studentListView.title"/>
+        <item view="LopHoc.list" title="msg://com.company.onboarding.view.lophoc/lopHocListView.title"/>
     </menu>
 
 </menu-config>

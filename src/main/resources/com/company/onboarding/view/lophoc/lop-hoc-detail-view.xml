@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://lopHocDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="lopHocDc"
+                  class="com.company.onboarding.entity.LopHoc">
+            <fetchPlan extends="_base">
+                <property name="students" fetchPlan="_base"/>
+                <property name="teachers" fetchPlan="_base"/>
+                <property name="school" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+            <collection id="studentsDc" property="students"/>
+            <collection id="teachersDc" property="teachers"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="lopHocDc">
+            <textField id="codeField" property="code"/>
+            <textField id="nameField" property="name"/>
+            <entityPicker id="schoolField" property="school">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+        </formLayout>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button action="studentsDataGrid.create"/>
+            <button action="studentsDataGrid.edit"/>
+            <button action="studentsDataGrid.remove"/>
+        </hbox>
+        <dataGrid id="studentsDataGrid" dataContainer="studentsDc" width="100%" minHeight="20em">
+            <actions>
+                <action id="create" type="list_create">
+                    <properties>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="edit" type="list_edit">
+                    <properties>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns>
+                <column property="name"/>
+                <column property="code"/>
+                <column property="dateOfBirth"/>
+                <column property="phoneNumber"/>
+                <column property="address"/>
+                <column property="idNum"/>
+            </columns>
+        </dataGrid>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button action="teachersDataGrid.create"/>
+            <button action="teachersDataGrid.edit"/>
+            <button action="teachersDataGrid.remove"/>
+        </hbox>
+        <dataGrid id="teachersDataGrid" dataContainer="teachersDc" width="100%" minHeight="20em">
+            <actions>
+                <action id="create" type="list_create">
+                    <properties>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="edit" type="list_edit">
+                    <properties>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns>
+                <column property="name"/>
+                <column property="code"/>
+                <column property="phoneNumber"/>
+                <column property="address"/>
+            </columns>
+        </dataGrid>
+        <hbox id="detailActions">
+            <button id="saveAndCloseBtn" action="saveAction"/>
+            <button id="closeBtn" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

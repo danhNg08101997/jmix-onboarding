@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://lopHocListView.title"
+      focusComponent="lopHocsDataGrid">
+    <data readOnly="true">
+        <collection id="lopHocsDc"
+                    class="com.company.onboarding.entity.LopHoc">
+            <fetchPlan extends="_base">
+                <property name="students" fetchPlan="_base"/>
+                <property name="teachers" fetchPlan="_base"/>
+                <property name="school" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="lopHocsDl">
+                <query>
+                    <![CDATA[select e from LopHoc e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="lopHocsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createBtn" action="lopHocsDataGrid.create"/>
+            <button id="editBtn" action="lopHocsDataGrid.edit"/>
+            <button id="removeBtn" action="lopHocsDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="lopHocsDl"/>
+        </hbox>
+        <dataGrid id="lopHocsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="lopHocsDc">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns>
+                <column property="code"/>
+                <column property="name"/>
+                <column property="school"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectBtn" action="selectAction"/>
+            <button id="discardBtn" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

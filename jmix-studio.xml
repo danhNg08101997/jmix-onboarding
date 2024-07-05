@@ -56,6 +56,10 @@
       </entry>
     </moduleSettings>
   </component>
+  <component name="JmixLiquibaseChangesConfig">
+    <exclude-change idName="STUDENT#CLASS_ID" tagName="dropColumn" />
+    <exclude-change idName="CLASS" tagName="dropTable" />
+  </component>
   <component name="VersionUpdateSettings">
     <option name="ignoredVersions">
       <set>
