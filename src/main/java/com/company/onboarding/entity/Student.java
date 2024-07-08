@@ -51,7 +51,7 @@ public class Student {
     @Column(name = "ID_NUM", nullable = false)
     private String idNum;
 
-    @JoinColumn(name = "LOP_HOC_ID", nullable = false)
+    @JoinColumn(name = "LOP_HOC_ID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private LopHoc lopHoc;
 

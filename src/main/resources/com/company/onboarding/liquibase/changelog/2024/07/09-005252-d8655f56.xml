@@ -6,12 +6,9 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
     <changeSet id="1" author="onboarding">
-        <dropForeignKeyConstraint baseTableName="STUDENTS" constraintName="FK_STUDENTS_ON_CLASSES"/>
-    </changeSet>
-    <changeSet id="2" author="onboarding">
-        <createTable tableName="CLASS">
+        <createTable tableName="LOP_HOC">
             <column name="ID" type="UUID">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CLASS"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LOP_HOC"/>
             </column>
             <column name="VERSION" type="INT">
                 <constraints nullable="false"/>
@@ -22,9 +19,10 @@
             <column name="NAME" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="SCHOOL_ID" type="UUID"/>
         </createTable>
     </changeSet>
-    <changeSet id="3" author="onboarding">
+    <changeSet id="2" author="onboarding">
         <createTable tableName="SCHOOL">
             <column name="ID" type="UUID">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SCHOOL"/>
@@ -40,7 +38,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="4" author="onboarding">
+    <changeSet id="3" author="onboarding">
         <createTable tableName="STUDENT">
             <column name="ID" type="UUID">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_STUDENT"/>
@@ -66,10 +64,12 @@
             <column name="ID_NUM" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="CLASS_ID" type="UUID"/>
+            <column name="LOP_HOC_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
-    <changeSet id="5" author="onboarding">
+    <changeSet id="4" author="onboarding">
         <createTable tableName="TEACHER">
             <column name="ID" type="UUID">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TEACHER"/>
@@ -87,22 +87,28 @@
                 <constraints nullable="false"/>
             </column>
             <column name="ADDRESS" type="VARCHAR(255)"/>
+            <column name="LOP_HOC_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
+    <changeSet id="5" author="onboarding">
+        <createIndex indexName="IDX_STUDENT_LOP_HOC" tableName="STUDENT">
+            <column name="LOP_HOC_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="LOP_HOC_ID" baseTableName="STUDENT"
+                                 constraintName="FK_STUDENT_ON_LOP_HOC" referencedColumnNames="ID"
+                                 referencedTableName="LOP_HOC"/>
+    </changeSet>
     <changeSet id="6" author="onboarding">
-        <addForeignKeyConstraint baseColumnNames="CLASS_ID" baseTableName="STUDENT" constraintName="FK_STUDENT_ON_CLASS"
-                                 referencedColumnNames="ID" referencedTableName="CLASS"/>
+        <addForeignKeyConstraint baseColumnNames="SCHOOL_ID" baseTableName="LOP_HOC"
+                                 constraintName="FK_LOP_HOC_ON_SCHOOL" referencedColumnNames="ID"
+                                 referencedTableName="SCHOOL"/>
     </changeSet>
     <changeSet id="7" author="onboarding">
-        <dropTable cascadeConstraints="true" tableName="CLASSES"/>
-    </changeSet>
-    <changeSet id="8" author="onboarding">
-        <dropTable cascadeConstraints="true" tableName="SHOOL"/>
-    </changeSet>
-    <changeSet id="9" author="onboarding">
-        <dropTable cascadeConstraints="true" tableName="STUDENTS"/>
-    </changeSet>
-    <changeSet id="10" author="onboarding">
-        <dropTable cascadeConstraints="true" tableName="TEACHERS"/>
+        <addForeignKeyConstraint baseColumnNames="LOP_HOC_ID" baseTableName="TEACHER"
+                                 constraintName="FK_TEACHER_ON_LOP_HOC" referencedColumnNames="ID"
+                                 referencedTableName="LOP_HOC"/>
     </changeSet>
 </databaseChangeLog>
