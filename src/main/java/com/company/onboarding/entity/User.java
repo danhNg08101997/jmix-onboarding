@@ -1,5 +1,6 @@
 package com.company.onboarding.entity;
 
+import io.jmix.core.FileRef;
 import io.jmix.core.HasTimeZone;
 import io.jmix.core.annotation.Secret;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
@@ -23,8 +24,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "USER_", indexes = {
         @Index(name = "IDX_USER__ON_USERNAME", columnList = "USERNAME", unique = true),
-        @Index(name = "IDX_USER__DEPARTMENT", columnList = "DEPARTMENT_ID"),
-        @Index(name = "IDX_USER__STEPS", columnList = "")
+        @Index(name = "IDX_USER__DEPARTMENT", columnList = "DEPARTMENT_ID")
 })
 public class User implements JmixUserDetails, HasTimeZone {
 
@@ -68,16 +68,27 @@ public class User implements JmixUserDetails, HasTimeZone {
     @ManyToOne(fetch = FetchType.LAZY)
     private Department department;
 
-    @Column(name = "JOINING_DATE")
-    private LocalDate joiningDate;
-
     @OrderBy("sortValue")
     @OneToMany(mappedBy = "user")
     @Composition
     private List<UserStep> steps;
 
+    @Column(name = "JOINING_DATE")
+    private LocalDate joiningDate;
+
+    @Column(name = "PICTURE", length = 1024)
+    private FileRef picture;
+
     @Transient
     protected Collection<? extends GrantedAuthority> authorities;
+
+    public FileRef getPicture() {
+        return picture;
+    }
+
+    public void setPicture(FileRef picture) {
+        this.picture = picture;
+    }
 
     public void setSteps(List<UserStep> steps) {
         this.steps = steps;
