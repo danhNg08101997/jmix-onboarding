@@ -35,7 +35,7 @@ public class UserStep {
     @NotNull
     private LocalDate dueDate;
 
-    @Column(name = "COMPLETED_DATE", nullable = false)
+    @Column(name = "COMPLETED_DATE")
     private LocalDate completedDate;
 
     @Column(name = "SORT_VALUE", nullable = false)
